@@ -92,6 +92,10 @@ function Medicines() {
         if (!formData.medicineName.trim()) {
             newErrors.medicineName =
                 "Medicine Name is required";
+        } else if (
+            !/^[A-Za-z ]+$/.test(formData.medicineName)
+        ) {
+            newErrors.medicineName = "Medicine name must contain alphabets..";
         }
 
         if (!formData.quantity) {
@@ -118,7 +122,12 @@ function Medicines() {
         if (!formData.manufacturer.trim()) {
             newErrors.manufacturer =
                 "Manufacturer is required";
+        } else if (
+            !/^[A-Za-z ]+$/.test(formData.manufacturer)
+        ) {
+            newErrors.manufacturer = "manufacturer must contain alphabets..";
         }
+
 
         setErrors(newErrors);
 
@@ -229,7 +238,7 @@ function Medicines() {
         }
     };
 
-     const editMedicine = (medicine) => {
+    const editMedicine = (medicine) => {
 
         setShowForm(true);
 
@@ -257,6 +266,15 @@ function Medicines() {
                 return;
             }
 
+            if (
+                !/^[A-Za-z ]+$/.test(formData.medicineName)
+            ) {
+                toast.error(
+                    "Medicine Name must contain only alphabets.."
+                );
+                return;
+            }
+
             if (Number(formData.quantity) <= 0) {
                 toast.error("Quantity must be greater than 0");
                 return;
@@ -271,6 +289,16 @@ function Medicines() {
                 toast.error("Manufacturer is required");
                 return;
             }
+
+            if (
+                !/^[A-Za-z ]+$/.test(formData.manufacturer)
+            ) {
+                toast.error(
+                    "Manufacturer must contain only alphabets"
+                );
+                return;
+            }
+
             await API.put(
                 `/medicines/${editId}`,
                 {
@@ -610,168 +638,185 @@ function Medicines() {
                 grid-cols-1
                 md:grid-cols-2
                 lg:grid-cols-3
-                gap-4
+                gap-6
                 "
                             >
 
-                                <label className="font-medium">
-                                    Medicine Name
-                                    <span className="text-red-500 ml-1">*</span>
-                                </label>
+                                <div>
+                                    <label className="font-medium block mb-1">
+                                        Medicine Name
+                                        <span className="text-red-500 ml-1">*</span>
+                                    </label>
 
-                                <input
-                                    type="text"
-                                    name="medicineName"
-                                    placeholder="Enter Medicine Name"
-                                    value={formData.medicineName}
-                                    onChange={handleChange}
-                                    className={`border p-3 rounded-lg w-full ${errors.medicineName
-                                        ? "border-red-500"
-                                        : ""
-                                        }`}
-                                />
+                                    <input
+                                        type="text"
+                                        name="medicineName"
+                                        placeholder="Enter Medicine Name"
+                                        value={formData.medicineName}
+                                        onChange={(e) => {
+                                            const value = e.target.value.replace(
+                                                /[^A-Za-z ]/g,
+                                                ""
+                                            );
 
-                                {
-                                    errors.medicineName && (
+                                            setFormData({
+                                                ...formData,
+                                                medicineName: value,
+                                            });
+                                        }}
+                                        className={`w-full border p-3 rounded-lg ${errors.medicineName
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                            }`}
+                                    />
+
+                                    {errors.medicineName && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.medicineName}
                                         </p>
-                                    )
-                                }
+                                    )}
+                                </div>
 
-                                <label className="font-medium">
-                                    Quantity
-                                    <span className="text-red-500 ml-1">*</span>
-                                </label>
+                                <div>
+                                    <label className="font-medium block mb-1">
+                                        Quantity
+                                        <span className="text-red-500 ml-1">*</span>
+                                    </label>
 
-                                <input
-                                    type="number"
-                                    name="quantity"
-                                    placeholder="Enter Quantity"
-                                    value={formData.quantity}
-                                    onChange={handleChange}
-                                    className={`border p-3 rounded-lg w-full ${errors.quantity
-                                        ? "border-red-500"
-                                        : ""
-                                        }`}
-                                />
+                                    <input
+                                        type="number"
+                                        name="quantity"
+                                        placeholder="Enter Quantity"
+                                        value={formData.quantity}
+                                        onChange={handleChange}
+                                        className={`w-full border p-3 rounded-lg ${errors.quantity
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                            }`}
+                                    />
 
-                                {
-                                    errors.quantity && (
+                                    {errors.quantity && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.quantity}
                                         </p>
-                                    )
-                                }
+                                    )}
+                                </div>
 
-                                <label className="font-medium">
-                                    Price
-                                    <span className="text-red-500 ml-1">*</span>
-                                </label>
+                                <div>
+                                    <label className="font-medium block mb-1">
+                                        Price
+                                        <span className="text-red-500 ml-1">*</span>
+                                    </label>
 
-                                <input
-                                    type="number"
-                                    name="price"
-                                    placeholder="Enter Price"
-                                    value={formData.price}
-                                    onChange={handleChange}
-                                    className={`border p-3 rounded-lg w-full ${errors.price
-                                        ? "border-red-500"
-                                        : ""
-                                        }`}
-                                />
+                                    <input
+                                        type="number"
+                                        name="price"
+                                        placeholder="Enter Price"
+                                        value={formData.price}
+                                        onChange={handleChange}
+                                        className={`w-full border p-3 rounded-lg ${errors.price
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                            }`}
+                                    />
 
-                                {
-                                    errors.price && (
+                                    {errors.price && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.price}
                                         </p>
-                                    )
-                                }
+                                    )}
+                                </div>
 
-                                <label className="font-medium">
-                                    Expiry Date
-                                    <span className="text-red-500 ml-1">*</span>
-                                </label>
+                                <div>
+                                    <label className="font-medium block mb-1">
+                                        Expiry Date
+                                        <span className="text-red-500 ml-1">*</span>
+                                    </label>
 
-                                <input
-                                    type="date"
-                                    name="expiryDate"
-                                    value={formData.expiryDate}
-                                    onChange={handleChange}
-                                    className={`border p-3 rounded-lg w-full ${errors.expiryDate
-                                        ? "border-red-500"
-                                        : ""
-                                        }`}
-                                />
+                                    <input
+                                        type="date"
+                                        name="expiryDate"
+                                        value={formData.expiryDate}
+                                        onChange={handleChange}
+                                        className={`w-full border p-3 rounded-lg ${errors.expiryDate
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                            }`}
+                                    />
 
-                                {
-                                    errors.expiryDate && (
+                                    {errors.expiryDate && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.expiryDate}
                                         </p>
-                                    )
-                                }
+                                    )}
+                                </div>
 
-                                <label className="font-medium">
-                                    Manufacturer
-                                    <span className="text-red-500 ml-1">*</span>
-                                </label>
+                                <div>
+                                    <label className="font-medium block mb-1">
+                                        Manufacturer
+                                        <span className="text-red-500 ml-1">*</span>
+                                    </label>
 
-                                <input
-                                    type="text"
-                                    name="manufacturer"
-                                    placeholder="Enter Manufacturer"
-                                    value={formData.manufacturer}
-                                    onChange={handleChange}
-                                    className={`border p-3 rounded-lg w-full ${errors.manufacturer
-                                        ? "border-red-500"
-                                        : ""
-                                        }`}
-                                />
+                                    <input
+                                        type="text"
+                                        name="manufacturer"
+                                        placeholder="Enter Manufacturer"
+                                        value={formData.manufacturer}
+                                        onChange={(e) => {
+                                            const value = e.target.value.replace(
+                                                /[^A-Za-z ]/g,
+                                                ""
+                                            );
 
-                                {
-                                    errors.manufacturer && (
+                                            setFormData({
+                                                ...formData,
+                                                manufacturer: value,
+                                            });
+                                        }}
+                                        className={`w-full border p-3 rounded-lg ${errors.manufacturer
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                            }`}
+                                    />
+
+                                    {errors.manufacturer && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.manufacturer}
                                         </p>
-                                    )
-                                }
+                                    )}
+                                </div>
 
-                                <div className="flex gap-3">
-
+                                <div className="md:col-span-2 lg:col-span-3 flex gap-3 mt-4">
                                     <button
                                         type="submit"
                                         className={`
-                        text-white
-                        px-6
-                        rounded-lg
-                        ${editId
+                                        text-white
+                                        px-6
+                                        py-3
+                                        rounded-lg
+                                        ${editId
                                                 ? "bg-yellow-500 hover:bg-yellow-600"
                                                 : "bg-blue-600 hover:bg-blue-700"
                                             }
-                        `}
+                                        `}
                                     >
-                                        {
-                                            editId
-                                                ? "Update"
-                                                : "Add"
-                                        }
+                                        {editId ? "Update" : "Add"}
                                     </button>
 
                                     <button
                                         type="button"
                                         onClick={resetForm}
                                         className="
-                        bg-gray-500
-                        text-white
-                        px-6
-                        rounded-lg
-                        "
+                                        bg-gray-500
+                                        hover:bg-gray-600
+                                        text-white
+                                        px-6
+                                        py-3
+                                        rounded-lg
+                                        "
                                     >
                                         Cancel
                                     </button>
-
                                 </div>
 
                             </form>
