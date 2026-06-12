@@ -17,17 +17,61 @@ function Login() {
 
     const [error, setError] = useState("");
 
+    const [errors, setErrors] = useState({});
+
     const handleChange = (e) => {
+
+        const { name, value } = e.target;
 
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+
+        setErrors({
+            ...errors,
+            [name]: "",
+        });
+    };
+
+
+    const validateLoginForm = () => {
+
+        let newErrors = {};
+
+        // Email Validation
+        if (!formData.email.trim()) {
+            newErrors.email = "Email is required";
+        }
+        else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                formData.email
+            )
+        ) {
+            newErrors.email = "Please enter a valid email address";
+        }
+
+        // Password Validation
+        if (!formData.password.trim()) {
+            newErrors.password = "Password is required";
+        }
+        else if (formData.password.length < 6) {
+            newErrors.password =
+                "Password must be at least 6 characters";
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleLogin = async (e) => {
 
         e.preventDefault();
+
+        if (!validateLoginForm()) {
+            return;
+        }
 
         try {
 
@@ -51,7 +95,7 @@ function Login() {
                 response.data.role
             );
 
-            
+
 
             navigate("/dashboard");
 
@@ -143,8 +187,45 @@ function Login() {
                         >
 
                             {/* EMAIL */}
-
                             <div>
+
+                                <label className="text-sm font-semibold text-gray-800">
+                                    Email
+                                    <span className="text-red-500 ml-1">*</span>
+                                </label>
+
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter your email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className={`
+            w-full
+            mt-2
+            border
+            rounded-full
+            px-5
+            py-3
+            outline-none
+            focus:ring-2
+            ${errors.email
+                                            ? "border-red-500"
+                                            : "border-gray-300"
+                                        }
+        `}
+                                />
+
+                                {
+                                    errors.email && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.email}
+                                        </p>
+                                    )
+                                }
+
+                            </div>
+                            {/* <div>
 
                                 <label className="text-sm font-semibold text-gray-800">
 
@@ -171,11 +252,77 @@ function Login() {
                                     "
                                 />
 
-                            </div>
+                            </div> */}
 
                             {/* PASSWORD */}
 
                             <div>
+
+                                <label className="text-sm font-semibold text-gray-800">
+                                    Password
+                                    <span className="text-red-500 ml-1">*</span>
+                                </label>
+
+                                <div className="relative mt-2">
+
+                                    <input
+                                        type={
+                                            showPassword
+                                                ? "text"
+                                                : "password"
+                                        }
+                                        name="password"
+                                        placeholder="Enter your password"
+                                        value={formData.password}
+                                        onChange={handleChange}
+                                        className={`
+                w-full
+                border
+                rounded-full
+                px-5
+                py-3
+                pr-12
+                outline-none
+                focus:ring-2
+                ${errors.password
+                                                ? "border-red-500"
+                                                : "border-gray-300"
+                                            }
+            `}
+                                    />
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setShowPassword(!showPassword)
+                                        }
+                                        className="
+                absolute
+                right-4
+                top-1/2
+                -translate-y-1/2
+                text-gray-400
+            "
+                                    >
+                                        {
+                                            showPassword
+                                                ? <FaEyeSlash />
+                                                : <FaEye />
+                                        }
+                                    </button>
+
+                                </div>
+
+                                {
+                                    errors.password && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.password}
+                                        </p>
+                                    )
+                                }
+
+                            </div>
+                            {/* <div>
 
                                 <label className="text-sm font-semibold text-gray-800">
 
@@ -232,7 +379,7 @@ function Login() {
 
                                 </div>
 
-                            </div>
+                            </div> */}
 
                             {/* ERROR */}
 
