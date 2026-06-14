@@ -396,16 +396,19 @@ function Login() {
 
                             {/* FORGOT PASSWORD */}
 
-                            {/* <div className="text-right">
+                            <div className="text-right">
 
                                 <a
+                                    onClick={() =>
+                                        navigate("/forgot-password")
+                                    }
                                     href="#"
                                     className="text-[#4582AC] text-sm"
                                 >
                                     Forgot Password?
                                 </a>
 
-                            </div> */}
+                            </div>
 
                             {/* LOGIN */}
 

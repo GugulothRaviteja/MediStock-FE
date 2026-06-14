@@ -14,6 +14,11 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Users from "./pages/users/Users";
 import SalesReport from "./pages/sales/SalesReport";
 import RevenueReport from "./pages/sales/RevenueReport";
+
+import ForgotPassword from "./pages/auth/ForgotPassword";
+import VerifyOtp from "./pages/auth/VerifyOtp";
+import ResetPassword from "./pages/auth/ResetPassword";
+
 function App() {
   return (
     <BrowserRouter>
@@ -54,14 +59,6 @@ function App() {
           path="/medicines/expiry"
           element={<Medicines />}
         />
-        {/* <Route
-          path="/medicines"
-          element={
-            <ProtectedRoute>
-              <Medicines />
-            </ProtectedRoute>
-          }
-        /> */}
 
         <Route
           path="/alerts"
@@ -107,6 +104,26 @@ function App() {
         <Route
           path="/revenue-report"
           element={<RevenueReport />}
+        />
+
+        <Route
+          path="/forgot-password"
+          element={<ForgotPassword />}
+        />
+
+        <Route
+          path="/verify-otp"
+          element={<VerifyOtp />}
+        />
+
+        <Route
+          path="/reset-password"
+          element={<ResetPassword />}
+        />
+
+        <Route
+          path="/login"
+          element={<Login />}
         />
 
       </Routes>
