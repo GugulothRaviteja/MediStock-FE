@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout";
 import API from "../../api/axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
 
 
 function Users() {
@@ -49,6 +50,55 @@ function Users() {
         });
     };
 
+    const approveUser = async (id) => {
+
+        try {
+
+            await API.put(
+                `/admin/approve/${id}`
+            );
+
+            alert(
+                "Staff Approved Successfully"
+            );
+
+            fetchUsers();
+
+        } catch (error) {
+
+            console.log(error);
+
+            alert(
+                "Approval Failed"
+            );
+        }
+    };
+
+
+    const rejectUser = async (id) => {
+
+        try {
+
+            await API.put(
+                `/admin/reject/${id}`
+            );
+
+            alert(
+                "Staff Rejected"
+            );
+
+            fetchUsers();
+
+        } catch (error) {
+
+            console.log(error);
+
+            alert(
+                "Reject Failed"
+            );
+        }
+    };
+
     const deleteUser = async (id) => {
 
         await API.delete(`/users/${id}`);
@@ -73,11 +123,11 @@ function Users() {
                     User Management
                 </h1>
 
-                <form
+                {/* <form
                     onSubmit={createStaff}
                     className="bg-gray-800 p-6 rounded-4xl shadow mb-8"
                 >
-                    
+
 
                     <input
                         type="text"
@@ -112,7 +162,7 @@ function Users() {
                         Create Staff
                     </button>
 
-                </form>
+                </form> */}
 
                 <table className="w-full bg-gray-200 shadow rounded-xl">
 
@@ -123,6 +173,7 @@ function Users() {
                             <th className="p-3">Username</th>
                             <th className="p-3">Email</th>
                             <th className="p-3">Role</th>
+                            <th className="p-3">Status</th>
                             <th className="p-3">Action</th>
 
                         </tr>
@@ -138,15 +189,90 @@ function Users() {
                                 <td className="p-3">{user.username}</td>
                                 <td className="p-3">{user.email}</td>
                                 <td className="p-3">{user.role}</td>
+                                <td>
+
+                                    <span
+                                        className={
+                                            user.status === "ACTIVE"
+                                                ? "text-green-600 font-bold"
+                                                : user.status === "PENDING"
+                                                    ? "text-yellow-600 font-bold"
+                                                    : "text-red-600 font-bold"
+                                        }
+                                    >
+
+                                        {user.status}
+
+                                    </span>
+
+                                </td>
 
                                 <td className="p-3">
 
-                                    <button
-                                        onClick={() => deleteUser(user.id)}
-                                        className="bg-red-500 text-white px-3 py-1 rounded"
-                                    >
-                                        Delete
-                                    </button>
+                                    <div className="flex gap-2 justify-center">
+
+                                        {/* DELETE */}
+
+                                        <button
+                                            onClick={() => deleteUser(user.id)}
+                                            className="
+                                            bg-red-500
+                                            text-white
+                                            p-2
+                                            rounded
+                                            hover:bg-red-600
+                                            "
+                                        >
+                                            <FaTrash />
+                                        </button>
+
+                                        {/* APPROVE */}
+
+                                        {
+                                            user.status === "PENDING" && (
+
+                                                <button
+                                                    onClick={() =>
+                                                        approveUser(user.id)
+                                                    }
+                                                    className="
+                                                    bg-green-600
+                                                    text-white
+                                                    px-3
+                                                    py-1
+                                                    rounded
+                                                    hover:bg-green-700
+                                                    "
+                                                >
+                                                    Approve
+                                                </button>
+                                            )
+                                        }
+
+                                        {/* REJECT */}
+
+                                        {
+                                            user.status === "PENDING" && (
+
+                                                <button
+                                                    onClick={() =>
+                                                        rejectUser(user.id)
+                                                    }
+                                                    className="
+                                                    bg-orange-500
+                                                    text-white
+                                                    px-3
+                                                    py-1
+                                                    rounded
+                                                    hover:bg-orange-600
+                                                    "
+                                                >
+                                                    Reject
+                                                </button>
+                                            )
+                                        }
+
+                                    </div>
 
                                 </td>
 

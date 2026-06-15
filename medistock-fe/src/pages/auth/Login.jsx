@@ -96,6 +96,12 @@ function Login() {
             );
 
 
+            if (response.data.role==="STAFF"){
+                localStorage.setItem(
+                    "welcomeMessage",
+                    "true"
+                );
+            }
 
             navigate("/dashboard");
 
@@ -428,31 +434,23 @@ function Login() {
                                 Log In
                             </button>
 
-                            {/* GOOGLE */}
-
-                            {/* <button
-                                type="button"
-                                className="
-                                w-full
-                                border
-                                py-3
-                                rounded-full
-                                hover:bg-gray-50
-                                "
-                            >
-                                Log in with Google
-                            </button> */}
-
                             {/* FOOTER */}
 
                             <p className="text-center text-gray-500">
 
                                 Don't have an account?{" "}
 
-                                <span className="text-[#4582AC] font-semibold cursor-pointer">
-
+                                <span
+                                    onClick={() =>
+                                        navigate("/register")
+                                    }
+                                    className="
+                                    text-[#4582AC]
+                                    font-semibold
+                                    cursor-pointer
+                                    "
+                                >
                                     Sign Up
-
                                 </span>
 
                             </p>

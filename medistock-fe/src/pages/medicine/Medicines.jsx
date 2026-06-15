@@ -34,6 +34,8 @@ function Medicines() {
 
     const location = useLocation();
 
+    const role = localStorage.getItem("role");
+
     const showLowStock = location.pathname === "/medicines/low-stock";
 
     const showExpiry = location.pathname === "/medicines/expiry";
@@ -568,22 +570,24 @@ function Medicines() {
                         Medicines Management
                     </h1>
 
-                    <button
-                        onClick={() => {
+                    {
+                        role === "ADMIN" && (
+                            <button
+                                onClick={() => {
 
-                            setEditId(null);
+                                    setEditId(null);
 
-                            setFormData({
-                                medicineName: "",
-                                quantity: "",
-                                price: "",
-                                expiryDate: "",
-                                manufacturer: "",
-                            });
+                                    setFormData({
+                                        medicineName: "",
+                                        quantity: "",
+                                        price: "",
+                                        expiryDate: "",
+                                        manufacturer: "",
+                                    });
 
-                            setShowForm(true);
-                        }}
-                        className="
+                                    setShowForm(true);
+                                }}
+                                className="
         bg-green-700
         hover:bg-green-900
         text-white
@@ -592,9 +596,11 @@ function Medicines() {
         rounded-xl
         font-medium
         "
-                    >
-                        + Add Medicine
-                    </button>
+                            >
+                                + Add Medicine
+                            </button>
+                        )
+                    }
 
                 </div>
 
@@ -787,6 +793,8 @@ function Medicines() {
                                 </div>
 
                                 <div className="md:col-span-2 lg:col-span-3 flex gap-3 mt-4">
+
+
                                     <button
                                         type="submit"
                                         className={`
@@ -1133,9 +1141,13 @@ function Medicines() {
                                     Status
                                 </th>
 
-                                <th className="p-3 text-left">
-                                    Actions
-                                </th>
+                                {
+                                    role === "ADMIN" && (
+                                        <th className="p-3 text-left">
+                                            Actions
+                                        </th>
+                                    )
+                                }
 
                             </tr>
 
@@ -1220,32 +1232,41 @@ function Medicines() {
                                         </td>
 
                                         <td className="p-3 flex gap-2">
-
-                                            <button
-                                                onClick={() =>
-                                                    editMedicine(medicine)
-                                                }
-                                                className="
+                                            {
+                                                role === "ADMIN" && (
+                                                    <button
+                                                        onClick={() =>
+                                                            editMedicine(medicine)
+                                                        }
+                                                        className="
   text-yellow-500
   hover:text-yellow-700
   text-lg
   "
-                                            >
-                                                <FaEdit />
-                                            </button>
+                                                    >
+                                                        <FaEdit />
+                                                    </button>
+                                                )
+                                            }
 
-                                            <button
-                                                onClick={() =>
-                                                    deleteMedicine(medicine.id)
-                                                }
-                                                className="
+                                            {
+                                                role === "ADMIN" && (
+
+
+                                                    <button
+                                                        onClick={() =>
+                                                            deleteMedicine(medicine.id)
+                                                        }
+                                                        className="
   text-red-500
   hover:text-red-700
   text-lg
   "
-                                            >
-                                                <FaTrashAlt />
-                                            </button>
+                                                    >
+                                                        <FaTrashAlt />
+                                                    </button>
+                                                )
+                                            }
 
                                         </td>
 

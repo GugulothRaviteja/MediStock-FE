@@ -19,6 +19,9 @@ import ForgotPassword from "./pages/auth/ForgotPassword";
 import VerifyOtp from "./pages/auth/VerifyOtp";
 import ResetPassword from "./pages/auth/ResetPassword";
 
+import Register from "./pages/auth/Register";
+import PendingUsers from "./pages/admin/PendingUsers";
+
 function App() {
   return (
     <BrowserRouter>
@@ -38,17 +41,16 @@ function App() {
         <Route
           path="/medicines"
           element={
-            <AdminRoute>
+            <ProtectedRoute>
               <Medicines />
-            </AdminRoute>
+            </ProtectedRoute>
           }
-
-
         />
-        <Route
+        
+        {/* <Route
           path="/medicines"
           element={<Medicines />}
-        />
+        /> */}
 
         <Route
           path="/medicines/low-stock"
@@ -124,6 +126,16 @@ function App() {
         <Route
           path="/login"
           element={<Login />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
+        />
+
+        <Route
+          path="/admin/pending-users"
+          element={<PendingUsers />}
         />
 
       </Routes>

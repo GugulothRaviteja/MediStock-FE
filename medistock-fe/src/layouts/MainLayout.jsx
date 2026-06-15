@@ -49,13 +49,15 @@ function MainLayout({ children }) {
 
 
 
-        ...(role === "ADMIN"
-            ? [{
+        // ...(role === "ADMIN"
+        //     ? [
+                {
                 path: "/medicines",
                 name: "Medicines",
                 icon: <FaCapsules />
-            }]
-            : []),
+            },
+        // ]
+        //     : []),
 
         ...(role === "ADMIN"
             ? [{

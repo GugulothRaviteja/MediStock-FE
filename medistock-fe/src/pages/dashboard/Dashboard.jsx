@@ -3,6 +3,7 @@ import MainLayout from "../../layouts/MainLayout";
 import API from "../../api/axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
     BarChart,
     Bar,
@@ -32,6 +33,32 @@ function Dashboard() {
         totalMedicinesSold: 0,
         totalSalesRevenue: 0,
     });
+
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
+
+    useEffect(() => {
+
+        const showWelcome =
+            localStorage.getItem("welcomeMessage");
+
+        if (
+            showWelcome === "true" &&
+            role === "STAFF"
+        ) {
+
+            toast.success(
+                `Welcome ${username} as a new staff member 🙏🏼`
+            );
+
+            localStorage.removeItem(
+                "welcomeMessage"
+            );
+        }
+
+    }, []);
+
+    const userName = localStorage.getItem("userName");
 
     const stockData = [
         {
@@ -124,6 +151,7 @@ function Dashboard() {
                     </p>
                 </div> */}
 
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                     {/* Total Medicines */}
@@ -132,7 +160,7 @@ function Dashboard() {
 
                         <div className="flex justify-between items-center">
 
-                            <div onClick={()=>
+                            <div onClick={() =>
                                 navigate("/medicines")
                             }>
 
@@ -162,9 +190,9 @@ function Dashboard() {
                     {/* Total Stock */}
 
                     <div className="bg-white rounded-3xl p-6 shadow-sm border hover:bg-gray-700"
-                    onClick={()=>
-                                navigate("/medicines")
-                            }>
+                        onClick={() =>
+                            navigate("/medicines")
+                        }>
 
                         <div className="flex justify-between items-center">
 
@@ -196,10 +224,10 @@ function Dashboard() {
                     {/* Low Stock */}
 
                     <div className="bg-white rounded-3xl p-6 shadow-sm border hover:bg-gray-700 "
-                    
-                    onClick={()=>
-                                navigate("/medicines/low-stock")
-                            }
+
+                        onClick={() =>
+                            navigate("/medicines/low-stock")
+                        }
                     >
 
                         <div className="flex justify-between items-center">
@@ -232,9 +260,9 @@ function Dashboard() {
                     {/* Expiry Alerts */}
 
                     <div className="bg-white rounded-3xl p-6 shadow-sm border hover:bg-gray-700"
-                    onClick={()=>
-                                navigate("/medicines/expiry")
-                            }>
+                        onClick={() =>
+                            navigate("/medicines/expiry")
+                        }>
 
                         <div className="flex justify-between items-center">
 
@@ -279,7 +307,7 @@ function Dashboard() {
                         {/* Total Medicines Sold */}
 
                         <div className="bg-white rounded-3xl p-6 shadow-sm border hover:bg-gray-700 hover:scale-105 "
-                        onClick={()=> navigate("/sales-report")}>
+                            onClick={() => navigate("/sales-report")}>
 
                             <p className="text-black-500 ">
                                 Total Medicines Sold
@@ -298,7 +326,7 @@ function Dashboard() {
                         {/* Revenue */}
 
                         <div className="bg-white rounded-3xl p-6 shadow-sm border hover:bg-gray-700 hover:scale-105"
-                        onClick={()=>navigate("/revenue-report")}
+                            onClick={() => navigate("/revenue-report")}
                         >
 
                             <p className="text-gray-500">
