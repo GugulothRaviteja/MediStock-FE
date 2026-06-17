@@ -39,29 +39,72 @@ function SalesReport() {
 
             key = date.toLocaleDateString();
 
-        }
+        } else if (filter === "monthly") {
 
-        else if (filter === "monthly") {
+            key = `${date.getMonth() + 1}-${date.getFullYear()}`;
 
-            key =
-                `${date.getMonth() + 1}-${date.getFullYear()}`;
-
-        }
-
-        else {
+        } else {
 
             key = date.getFullYear();
-
         }
 
-        acc[key] =
-            (acc[key] || 0)
-            +
-            sale.quantitySold;
+        if (!acc[key]) {
+
+            acc[key] = {
+                totalQty: 0,
+                medicines: []
+            };
+        }
+
+        acc[key].totalQty += sale.quantitySold;
+
+        if (
+            !acc[key].medicines.includes(
+                sale.medicineName
+            )
+        ) {
+            acc[key].medicines.push(
+                sale.medicineName
+            );
+        }
 
         return acc;
 
     }, {});
+    // const groupedSales = sales.reduce((acc, sale) => {
+
+    //     const date = new Date(sale.soldAt);
+
+    //     let key;
+
+    //     if (filter === "daily") {
+
+    //         key = date.toLocaleDateString();
+
+    //     }
+
+    //     else if (filter === "monthly") {
+
+    //         key =
+    //             `${date.getMonth() + 1}-${date.getFullYear()}`;
+
+    //     }
+
+    //     else {
+
+    //         key = date.getFullYear();
+
+    //     }
+
+    //     acc[key] =
+    //         (acc[key] || 0)
+    //         +
+    //         sale.quantitySold;
+
+    //     return acc;
+
+    // }, {});
+
 
     return (
 
@@ -119,8 +162,34 @@ function SalesReport() {
                         </tr>
 
                     </thead>
-
                     <tbody>
+
+                        {
+                            Object.entries(groupedSales)
+                                .map(([date, data]) => (
+
+                                    <tr key={date}>
+
+                                        <td className="border p-3">
+                                            {date}
+                                        </td>
+
+                                        <td className="border p-3">
+                                            {data.totalQty}
+                                        </td>
+
+                                        <td className="border p-3">
+                                            {data.medicines.join(", ")}
+                                        </td>
+
+                                    </tr>
+
+                                ))
+                        }
+
+                    </tbody>
+
+                    {/* <tbody>
 
                         {
                             Object.entries(groupedSales)
@@ -145,7 +214,7 @@ function SalesReport() {
                                 ))
                         }
 
-                    </tbody>
+                    </tbody> */}
 
                 </table>
 

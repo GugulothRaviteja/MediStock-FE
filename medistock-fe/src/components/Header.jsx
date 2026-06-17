@@ -356,7 +356,8 @@ function Header({
           rounded-full
           "
         >
-
+{
+                                    role === "ADMIN" && (
           <img
             src="../src/assets/tej pic.jpg"
             alt="Admin"
@@ -367,6 +368,8 @@ function Header({
             rounded-full
             "
           />
+          )
+}
 
           <div>
 

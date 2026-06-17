@@ -213,19 +213,23 @@ function Users() {
 
                                         {/* DELETE */}
 
-                                        <button
-                                            onClick={() => deleteUser(user.id)}
-                                            className="
+                                        {
+                                            user.role === "STAFF" && (
+                                                <button
+                                                    onClick={() => deleteUser(user.id)}
+                                                    className="
                                             bg-red-500
                                             text-white
                                             p-2
                                             rounded
                                             hover:bg-red-600
                                             "
-                                        >
-                                            <FaTrash />
-                                        </button>
+                                                >
 
+                                                    <FaTrash />
+                                                </button>
+                                            )
+                                        }
                                         {/* APPROVE */}
 
                                         {
