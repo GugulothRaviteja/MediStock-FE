@@ -65,6 +65,8 @@ function Medicines() {
     });
 
     const [showSellForm, setShowSellForm] = useState(false);
+    const [expandedCard, setExpandedCard] = useState(null);
+
 
     // FETCH ALL MEDICINES
 
@@ -204,16 +206,6 @@ function Medicines() {
 
         setErrors(newErrors);
     };
-
-    // const handleChange = (e) => {
-
-    //     setFormData({
-    //         ...formData,
-    //         [e.target.name]: e.target.value,
-    //     });
-    // };
-
-
 
     const validateMedicineForm = () => {
 
@@ -862,6 +854,18 @@ ${selectedMedicine.quantity}`;
 
         Object.keys(sellErrors).length === 0;
 
+    const handleCardClick = (medicineId) => {
+
+        if (expandedCard === medicineId) {
+
+            setExpandedCard(null);
+
+        } else {
+
+            setExpandedCard(medicineId);
+
+        }
+    };
 
     const deleteMedicine = async (id) => {
 
@@ -998,6 +1002,49 @@ ${selectedMedicine.quantity}`;
             );
         }
     };
+    const getMedicineImage = (medicineName) => {
+
+        const name = medicineName?.toLowerCase();
+
+        if (name.includes("paracetamol")) {
+            return "/images/paracetamol.jpg";
+        }
+
+        if (name.includes("dolo")) {
+            return "/images/dolo.jpg";
+        }
+        
+        if (name.includes("amlodipine")) {
+            return "/images/Amlodipine.jpg";
+        }
+        if (name.includes("atorvastatin")) {
+            return "/images/atorvastatin.jpg";
+        }
+         
+        if (name.includes("antipyretics")) {
+            return "/images/antipyretics.jpg";
+        }
+        
+        if (name.includes("amoxicillin")) {
+            return "/images/Amoxicillin.jpg";
+        }
+        if (name.includes("analgesic")) {
+            return "/images/Analgesic.jpg";
+        }
+        if (name.includes("acetaminophen")) {
+            return "/images/Acetaminophen.jpg";
+        }
+
+        if (name.includes("crocin")) {
+            return "/images/crocin.jpg";
+        }
+
+        if (name.includes("azithromycin")) {
+            return "/images/azithromycin.jpg";
+        }
+
+        return "/images/default-medicine.png";
+    };
 
     return (
 
@@ -1116,7 +1163,7 @@ ${selectedMedicine.quantity}`;
                                                 }
                                             });
                                         }}
-                                        
+
                                         onBlur={handleBlur}
                                         className={`w-full border p-3 rounded-lg ${touched.medicineName && errors.medicineName
                                             ? "border-red-500"
@@ -1594,7 +1641,236 @@ ${selectedMedicine.quantity}`;
                         Medicines List
                     </h2>
 
-                    <table className="w-full border-collapse">
+                    <div
+                        className="
+    grid
+    grid-cols-1
+    md:grid-cols-2
+    lg:grid-cols-3
+    gap-6
+    items-start
+"
+                    >
+
+                        {currentMedicines.map((medicine) => {
+
+                            const isExpanded =
+                                expandedCard === medicine.id;
+
+                            return (
+
+                                <div
+                                    key={medicine.id}
+                                    onClick={() =>
+                                        handleCardClick(medicine.id)
+                                    }
+                                    className={`
+                bg-white
+                rounded-3xl
+                shadow-md
+                cursor-pointer
+                transition-all
+                duration-300
+                self-start
+                overflow-hidden
+                hover:shadow-2xl
+                hover:-translate-y-1
+                ${isExpanded
+                                            ? "border-2 border-gray-500"
+                                            : "border border-yellow-200"
+                                        }
+            `}
+                                >
+
+                                    {/* IMAGE */}
+
+                                    <div className="h-52 bg-gray-100 flex items-center justify-center">
+
+                                        <img
+                                            src={getMedicineImage(
+                                                medicine.medicineName
+                                            )}
+                                            alt={medicine.medicineName}
+                                            className="
+                        h-40
+                        object-contain
+                    "
+                                        />
+
+                                    </div>
+
+                                    {/* BASIC INFO */}
+
+                                    <div className="p-4">
+
+                                        <h3 className="font-bold text-lg text-gray-800">
+
+                                            {medicine.medicineName}
+
+                                        </h3>
+
+                                        <p className="text-gray-600 text-sm mt-2">
+                                            Manufacturer:
+                                            <span className="font-medium">
+                                                {" "}
+                                                {medicine.manufacturer}
+                                            </span>
+                                        </p>
+
+                                        <p className="text-gray-600 text-sm">
+                                            Price:
+                                            <span className="font-medium">
+                                                {" "}
+                                                ₹{medicine.price}
+                                            </span>
+                                        </p>
+
+                                        <p className="text-gray-600 text-sm">
+                                            Quantity:
+                                            <span className="font-medium">
+                                                {" "}
+                                                {medicine.quantity}
+                                            </span>
+                                        </p>
+
+                                        <p className="text-gray-600 text-sm">
+                                            Expiry:
+                                            <span className="font-medium">
+                                                {" "}
+                                                {medicine.expiryDate}
+                                            </span>
+                                        </p>
+
+                                        {/* EXPANDED CONTENT */}
+
+                                        {isExpanded && (
+
+                                            <div className="mt-4">
+
+                                                {/* STATUS */}
+
+                                                <div className="mb-4">
+
+                                                    {medicine.quantity <= 10 ? (
+
+                                                        <span
+                                                            className="
+                                        bg-yellow-100
+                                        text-yellow-700
+                                        px-3
+                                        py-1
+                                        rounded-full
+                                        text-sm
+                                    "
+                                                        >
+                                                            Low Stock
+                                                        </span>
+
+                                                    ) : (
+
+                                                        <span
+                                                            className="
+                                        bg-green-100
+                                        text-green-700
+                                        px-3
+                                        py-1
+                                        rounded-full
+                                        text-sm
+                                    "
+                                                        >
+                                                            In Stock
+                                                        </span>
+
+                                                    )}
+
+                                                </div>
+
+                                                {/* SELL BUTTON */}
+
+                                                <button
+                                                    onClick={(e) => {
+
+                                                        e.stopPropagation();
+
+                                                        setSellData({
+                                                            ...sellData,
+                                                            medicineId:
+                                                                medicine.id,
+                                                        });
+
+                                                        setShowSellForm(true);
+                                                    }}
+                                                    className="
+                                w-full
+                                bg-green-600
+                                hover:bg-green-700
+                                text-white
+                                py-2
+                                rounded-xl
+                                mb-4
+                            "
+                                                >
+                                                    Sell Medicine
+                                                </button>
+
+                                                {/* ACTIONS */}
+
+                                                {role === "ADMIN" && (
+
+                                                    <div className="flex justify-center gap-6">
+
+                                                        <button
+                                                            onClick={(e) => {
+
+                                                                e.stopPropagation();
+
+                                                                editMedicine(
+                                                                    medicine
+                                                                );
+                                                            }}
+                                                            className="
+                                        text-yellow-500
+                                        hover:text-yellow-700
+                                        text-xl
+                                    "
+                                                        >
+                                                            <FaEdit />
+                                                        </button>
+
+                                                        <button
+                                                            onClick={(e) => {
+
+                                                                e.stopPropagation();
+
+                                                                deleteMedicine(
+                                                                    medicine.id
+                                                                );
+                                                            }}
+                                                            className="
+                                        text-red-500
+                                        hover:text-red-700
+                                        text-xl
+                                    "
+                                                        >
+                                                            <FaTrashAlt />
+                                                        </button>
+
+                                                    </div>
+
+                                                )}
+
+                                            </div>
+
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            );
+                        })}
+                    </div>
+                    {/* <table className="w-full border-collapse">
 
                         <thead>
 
@@ -1761,7 +2037,7 @@ ${selectedMedicine.quantity}`;
 
                         </tbody>
 
-                    </table>
+                    </table> */}
 
                     <div className="
 flex
