@@ -272,11 +272,6 @@ function MainLayout({ children }) {
 
             {/* PAGE CONTENT */}
 
-            {/* <div className="flex-1 md:ml-64 bg-[#F7F8FC] p-8 overflow-y-auto h-screen">
-
-                {children}
-
-            </div> */}
             <div
                 className="flex-1 md:ml-64 bg-[#F7F8FC] p-0 overflow-y-auto h-screen"
             >

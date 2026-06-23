@@ -117,7 +117,7 @@ function Users() {
     return (
         <MainLayout>
 
-            <div className="p-6 ">
+                <div className="bg-gradient-to-r from-gray-300 to-gray-100 p-6 rounded-3xl shadow-sm overflow-x-auto">
 
                 <h1 className="text-4xl font-bold text-gray-800 mb-6">
                     User Management
@@ -164,11 +164,11 @@ function Users() {
 
                 </form> */}
 
-                <table className="w-full bg-gray-200 shadow rounded-xl">
+                <table className="w-full border-collapse">
 
                     <thead>
 
-                        <tr className="bg-gray-600 text-white">
+                        <tr className="bg-gray-400 text-gray-800">
 
                             <th className="p-3">Username</th>
                             <th className="p-3">Email</th>
@@ -184,7 +184,8 @@ function Users() {
 
                         {users.map((user) => (
 
-                            <tr key={user.id}>
+                            <tr key={user.id} className="bg-gray-100 hover:bg-gray-200"
+                            >
 
                                 <td className="p-3">{user.username}</td>
                                 <td className="p-3">{user.email}</td>

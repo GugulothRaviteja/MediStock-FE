@@ -47,11 +47,6 @@ function App() {
           }
         />
         
-        {/* <Route
-          path="/medicines"
-          element={<Medicines />}
-        /> */}
-
         <Route
           path="/medicines/low-stock"
           element={<Medicines />}

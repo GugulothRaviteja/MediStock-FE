@@ -9,6 +9,8 @@ function Register() {
     const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
 
     const [showConfirmPassword, setShowConfirmPassword] =
         useState(false);
@@ -26,11 +28,170 @@ function Register() {
 
     const handleChange = (e) => {
 
+        const { name, value } = e.target;
+
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+
+        let newErrors = { ...errors };
+
+        switch (name) {
+
+            case "username":
+
+                if (!value.trim()) {
+
+                    newErrors.username =
+                        "User Name is required";
+
+                } else {
+
+                    delete newErrors.username;
+                }
+
+                break;
+
+            case "email":
+
+                if (!value.trim()) {
+
+                    newErrors.email =
+                        "Email is required";
+
+                }
+                else if (
+                    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+                ) {
+
+                    newErrors.email =
+                        "Enter valid email";
+
+                }
+                else {
+
+                    delete newErrors.email;
+                }
+
+                break;
+
+            case "country":
+
+                if (!value) {
+
+                    newErrors.country =
+                        "Country is required";
+
+                } else {
+
+                    delete newErrors.country;
+                }
+
+                break;
+
+            case "mobileNumber":
+
+                if (!value.trim()) {
+
+                    newErrors.mobileNumber =
+                        "Mobile Number is required";
+
+                }
+                else if (
+                    !/^[0-9]{10}$/.test(value)
+                ) {
+
+                    newErrors.mobileNumber =
+                        "Mobile number must be 10 digits";
+
+                }
+                else {
+
+                    delete newErrors.mobileNumber;
+                }
+
+                break;
+
+            case "password":
+
+                if (!value.trim()) {
+
+                    newErrors.password =
+                        "Password is required";
+
+                }
+                else if (value.length < 6) {
+
+                    newErrors.password =
+                        "Password must be at least 6 characters";
+
+                }
+                else {
+
+                    delete newErrors.password;
+                }
+
+                break;
+
+            case "confirmPassword":
+
+                if (!value.trim()) {
+
+                    newErrors.confirmPassword =
+                        "Confirm Password is required";
+
+                }
+                else if (
+                    value !== formData.password
+                ) {
+
+                    newErrors.confirmPassword =
+                        "Passwords do not match";
+
+                }
+                else {
+
+                    delete newErrors.confirmPassword;
+                }
+
+                break;
+
+            default:
+                break;
+        }
+
+        setErrors(newErrors);
     };
+
+    const handleBlur = (e) => {
+
+        const { name, value } = e.target;
+
+        setTouched(prev => ({
+            ...prev,
+            [name]: true
+        }));
+
+        let newErrors = { ...errors };
+
+        if (!value.trim()) {
+
+            newErrors[name] =
+                `${name.replace(/([A-Z])/g, " $1")} is required`;
+
+        }
+
+        setErrors(newErrors);
+    };
+
+    // const handleChange = (e) => {
+
+    //     setFormData({
+    //         ...formData,
+    //         [e.target.name]: e.target.value,
+    //     });
+    // };
 
     const handleRegister = async (e) => {
 
@@ -120,9 +281,24 @@ function Register() {
         }
     };
 
+
+    const isRegisterFormValid =
+
+        formData.username.trim() &&
+        formData.email &&
+        formData.country &&
+        formData.mobileNumber &&
+        formData.password &&
+        formData.confirmPassword &&
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email) &&
+        /^[0-9]{10}$/.test(formData.mobileNumber) &&
+        formData.password.length >= 6 &&
+        formData.password === formData.confirmPassword &&
+        Object.keys(errors).length === 0;
+
     return (
 
-        <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center p-6">
+        <div className="min-h-screen bg-blue-100 flex items-center justify-center p-6">
 
             <div className="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
@@ -171,30 +347,63 @@ function Register() {
                             className="space-y-4"
                         >
 
+                            <label className="text-sm font-semibold text-gray-800">
+                                User Name
+                                <span className="text-red-500 ml-1">*</span>
+                            </label>
                             <input
                                 type="text"
                                 name="username"
-                                placeholder="User Name"
+                                placeholder="Enter User Name"
                                 value={formData.username}
                                 onChange={handleChange}
-                                className="w-full border rounded-full px-5 py-3"
+                                onBlur={handleBlur}
+                                className={`w-full border rounded-full px-5 py-3 ${touched.username && errors.username
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                    }`}
                             />
+                            {touched.username && errors.username && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.username}
+                                </p>
+                            )}
 
+                            <label className="text-sm font-semibold text-gray-800">
+                                Email
+                                <span className="text-red-500 ml-1">*</span>
+                            </label>
                             <input
                                 type="email"
                                 name="email"
-                                placeholder="Email"
+                                placeholder="Enter email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="w-full border rounded-full px-5 py-3"
+                                onBlur={handleBlur}
+                                className={`w-full border rounded-full px-5 py-3 ${touched.email && errors.email
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                    }`}
                             />
+                            {touched.email && errors.email && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.email}
+                                </p>
+                            )}
 
+                            <label className="text-sm font-semibold text-gray-800">
+                                Country
+                                <span className="text-red-500 ml-1">*</span>
+                            </label>
                             <select
                                 name="country"
                                 value={formData.country}
                                 onChange={handleChange}
-                                className="w-full border rounded-full px-5 py-3"
-                            >
+                                onBlur={handleBlur}
+                                className={`w-full border rounded-full px-5 py-3 ${touched.country && errors.country
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                    }`}                            >
                                 <option value="">
                                     Select Country
                                 </option>
@@ -215,20 +424,41 @@ function Register() {
                                     Canada
                                 </option>
                             </select>
+                            {touched.country && errors.country && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.country}
+                                </p>
+                            )}
 
+                            <label className="text-sm font-semibold text-gray-800">
+                                Phone
+                                <span className="text-red-500 ml-1">*</span>
+                            </label>
                             <input
                                 type="text"
                                 name="mobileNumber"
                                 placeholder="Mobile Number"
                                 value={formData.mobileNumber}
                                 onChange={handleChange}
-                                className="w-full border rounded-full px-5 py-3"
-                            />
+                                onBlur={handleBlur}
+                                className={`w-full border rounded-full px-5 py-3 ${touched.mobileNumber && errors.mobileNumber
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                    }`} />
+                            {touched.mobileNumber && errors.mobileNumber && (
+                                <p className="text-red-500 text-sm mt-1">
+                                    {errors.mobileNumber}
+                                </p>
+                            )}
 
                             {/* PASSWORD */}
 
                             <div className="relative">
 
+                                <label className="text-sm font-semibold text-gray-800">
+                                    Password
+                                    <span className="text-red-500 ml-1">*</span>
+                                </label>
                                 <input
                                     type={
                                         showPassword
@@ -236,11 +466,19 @@ function Register() {
                                             : "password"
                                     }
                                     name="password"
-                                    placeholder="Password"
+                                    placeholder="Enter Password"
                                     value={formData.password}
                                     onChange={handleChange}
-                                    className="w-full border rounded-full px-5 py-3 pr-12"
-                                />
+                                    onBlur={handleBlur}
+                                    className={`w-full border rounded-full px-5 py-3 ${touched.password && errors.password
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                        }`} />
+                                {touched.password && errors.password && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.password}
+                                    </p>
+                                )}
 
                                 <button
                                     type="button"
@@ -251,6 +489,7 @@ function Register() {
                                     }
                                     className="absolute right-4 top-1/2 -translate-y-1/2"
                                 >
+
 
                                     {
                                         showPassword
@@ -266,6 +505,10 @@ function Register() {
 
                             <div className="relative">
 
+                                <label className="text-sm font-semibold text-gray-800">
+                                    Confirm Password
+                                    <span className="text-red-500 ml-1">*</span>
+                                </label>
                                 <input
                                     type={
                                         showConfirmPassword
@@ -278,8 +521,16 @@ function Register() {
                                         formData.confirmPassword
                                     }
                                     onChange={handleChange}
-                                    className="w-full border rounded-full px-5 py-3 pr-12"
-                                />
+                                    onBlur={handleBlur}
+                                    className={`w-full border rounded-full px-5 py-3 ${touched.confirmPassword && errors.confirmPassword
+                                        ? "border-red-500"
+                                        : "border-gray-300"
+                                        }`} />
+                                {touched.confirmPassword && errors.confirmPassword && (
+                                    <p className="text-red-500 text-sm mt-1">
+                                        {errors.confirmPassword}
+                                    </p>
+                                )}
 
                                 <button
                                     type="button"
@@ -314,7 +565,17 @@ function Register() {
 
                             <button
                                 type="submit"
-                                className="w-full bg-[#4582AC] hover:bg-[#2C5E8A] text-white py-3 rounded-full font-semibold"
+                                disabled={!isRegisterFormValid}
+                                className="
+w-full
+bg-[#4582AC]
+text-white
+py-3
+rounded-full
+font-semibold
+disabled:bg-gray-400
+disabled:cursor-not-allowed
+"
                             >
                                 Register
                             </button>

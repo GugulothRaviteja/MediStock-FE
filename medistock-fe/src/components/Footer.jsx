@@ -12,7 +12,7 @@ function Footer() {
             "
         >
 
-            © 2026 MediStock
+            2026 MediStock
             Pharmacy Management System
 
         </footer>

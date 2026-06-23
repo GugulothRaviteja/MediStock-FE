@@ -71,66 +71,66 @@ function RevenueReport() {
 
         }, {});
 
-        const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-];
+    const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ];
 
-const filteredSales = sales.filter(
-    (sale) => {
+    const filteredSales = sales.filter(
+        (sale) => {
 
-        const saleDate =
-            new Date(sale.soldAt);
+            const saleDate =
+                new Date(sale.soldAt);
 
-        if (
-            filter === "daily" &&
-            selectedDate
-        ) {
+            if (
+                filter === "daily" &&
+                selectedDate
+            ) {
 
-            return (
-                saleDate
-                    .toISOString()
-                    .split("T")[0]
-                === selectedDate
-            );
-        }
+                return (
+                    saleDate
+                        .toISOString()
+                        .split("T")[0]
+                    === selectedDate
+                );
+            }
 
-        if (
-            filter === "monthly"
-        ) {
+            if (
+                filter === "monthly"
+            ) {
 
-            return (
-                saleDate.getMonth() + 1
+                return (
+                    saleDate.getMonth() + 1
                     === selectedMonth
-                &&
-                saleDate.getFullYear()
+                    &&
+                    saleDate.getFullYear()
                     === selectedYear
-            );
-        }
+                );
+            }
 
-        if (
-            filter === "yearly"
-        ) {
+            if (
+                filter === "yearly"
+            ) {
 
-            return (
-                saleDate.getFullYear()
+                return (
+                    saleDate.getFullYear()
                     === selectedYear
-            );
-        }
+                );
+            }
 
-        return true;
-    }
-);
+            return true;
+        }
+    );
 
     return (
 
@@ -142,225 +142,167 @@ const filteredSales = sales.filter(
                     Revenue Report
                 </h1>
 
-<div className="flex flex-wrap gap-3 mb-6">
-
-    <button
-        onClick={() => setFilter("daily")}
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-    >
-        Daily
-    </button>
-
-    <button
-        onClick={() => setFilter("monthly")}
-        className="bg-green-600 text-white px-4 py-2 rounded"
-    >
-        Monthly
-    </button>
-
-    <button
-        onClick={() => setFilter("yearly")}
-        className="bg-purple-600 text-white px-4 py-2 rounded"
-    >
-        Yearly
-    </button>
-
-    {/* DAILY */}
-
-    {filter === "daily" && (
-
-        <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) =>
-                setSelectedDate(e.target.value)
-            }
-            className="
-                border
-                rounded
-                px-3
-                py-2
-            "
-        />
-    )}
-
-    {/* MONTHLY */}
-
-    {filter === "monthly" && (
-
-        <>
-            <select
-                value={selectedMonth}
-                onChange={(e) =>
-                    setSelectedMonth(
-                        Number(e.target.value)
-                    )
-                }
-                className="
-                    border
-                    rounded
-                    px-3
-                    py-2
-                "
-            >
-
-                {
-                    months.map(
-                        (month, index) => (
-
-                            <option
-                                key={index}
-                                value={index + 1}
-                            >
-                                {month}
-                            </option>
-                        )
-                    )
-                }
-
-            </select>
-
-            <select
-                value={selectedYear}
-                onChange={(e) =>
-                    setSelectedYear(
-                        Number(e.target.value)
-                    )
-                }
-                className="
-                    border
-                    rounded
-                    px-3
-                    py-2
-                "
-            >
-                <option value="2024">
-                    2024
-                </option>
-
-                <option value="2025">
-                    2025
-                </option>
-
-                <option value="2026">
-                    2026
-                </option>
-
-                <option value="2027">
-                    2027
-                </option>
-
-            </select>
-        </>
-    )}
-
-    {/* YEARLY */}
-
-    {filter === "yearly" && (
-
-        <select
-            value={selectedYear}
-            onChange={(e) =>
-                setSelectedYear(
-                    Number(e.target.value)
-                )
-            }
-            className="
-                border
-                rounded
-                px-3
-                py-2
-            "
-        >
-            <option value="2024">
-                2024
-            </option>
-
-            <option value="2025">
-                2025
-            </option>
-
-            <option value="2026">
-                2026
-            </option>
-
-            <option value="2027">
-                2027
-            </option>
-
-        </select>
-    )}
-
-</div>
-                {/* <div className="flex gap-3 mb-6">
+                <div className="flex flex-wrap gap-3 mb-6">
 
                     <button
                         onClick={() => setFilter("daily")}
-                        className="bg-blue-600 text-white px-4 py-2 rounded"
+                        className="bg-blue-500 text-white px-4 py-2 rounded-3xl"
                     >
                         Daily
                     </button>
 
                     <button
                         onClick={() => setFilter("monthly")}
-                        className="bg-green-600 text-white px-4 py-2 rounded"
+                        className="bg-green-600 text-white px-4 py-2 rounded-3xl"
                     >
                         Monthly
                     </button>
 
                     <button
                         onClick={() => setFilter("yearly")}
-                        className="bg-purple-600 text-white px-4 py-2 rounded"
+                        className="bg-purple-600 text-white px-4 py-2 rounded-3xl"
                     >
                         Yearly
                     </button>
 
-                </div> */}
+                    {/* DAILY */}
 
-                {/* <table>
+                    {filter === "daily" && (
+
+                        <input
+                            type="date"
+                            value={selectedDate}
+                            onChange={(e) =>
+                                setSelectedDate(e.target.value)
+                            }
+                            className="
+                border
+                rounded-3xl
+                px-3
+                py-2
+            "
+                        />
+                    )}
+
+                    {/* MONTHLY */}
+
+                    {filter === "monthly" && (
+
+                        <>
+                            <select
+                                value={selectedMonth}
+                                onChange={(e) =>
+                                    setSelectedMonth(
+                                        Number(e.target.value)
+                                    )
+                                }
+                                className="
+                    border
+                    rounded-3xl
+                    px-3
+                    py-2
+                "
+                            >
+
+                                {
+                                    months.map(
+                                        (month, index) => (
+
+                                            <option
+                                                key={index}
+                                                value={index + 1}
+                                            >
+                                                {month}
+                                            </option>
+                                        )
+                                    )
+                                }
+
+                            </select>
+
+                            <select
+                                value={selectedYear}
+                                onChange={(e) =>
+                                    setSelectedYear(
+                                        Number(e.target.value)
+                                    )
+                                }
+                                className="
+                    border
+                    rounded-3xl
+                    px-3
+                    py-2
+                "
+                            >
+                                <option value="2024">
+                                    2024
+                                </option>
+
+                                <option value="2025">
+                                    2025
+                                </option>
+
+                                <option value="2026">
+                                    2026
+                                </option>
+
+                                <option value="2027">
+                                    2027
+                                </option>
+
+                            </select>
+                        </>
+                    )}
+
+                    {/* YEARLY */}
+
+                    {filter === "yearly" && (
+
+                        <select
+                            value={selectedYear}
+                            onChange={(e) =>
+                                setSelectedYear(
+                                    Number(e.target.value)
+                                )
+                            }
+                            className="
+                border
+                rounded-3xl
+                px-3
+                py-2
+            "
+                        >
+                            <option value="2024">
+                                2024
+                            </option>
+
+                            <option value="2025">
+                                2025
+                            </option>
+
+                            <option value="2026">
+                                2026
+                            </option>
+
+                            <option value="2027">
+                                2027
+                            </option>
+
+                        </select>
+                    )}
+
+                </div>
+
+                <table className="w-full border-collapse">
+
                     <thead>
-                        <tr>
-                            <th>Medicine</th>
-                            <th>Quantity Sold</th>
-                            <th>Revenue</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
 
-                    <tbody>
+                        <tr className="bg-gray-200 text-gray-700">
 
-                        {sales.map((sale) => (
-                            <tr key={sale.id}>
-
-                                <td>{sale.medicineName}</td>
-
-                                <td>{sale.quantitySold}</td>
-
-                                <td>₹ {sale.totalPrice}</td>
-
-                                <td>
-                                    {
-                                        new Date(sale.soldAt)
-                                            .toLocaleDateString()
-                                    }
-                                </td>
-
-                            </tr>
-                        ))}
-
-                    </tbody>
-                </table> */}
-
-                <table className="w-full bg-white">
-
-                    <thead>
-
-                        <tr>
-
-                            <th className="p-3 border">Date</th>
-                            <th className="p-3 border">Medicine</th>
-                            <th className="p-3 border">Quantity Sold</th>
-                            <th className="p-3 border">Revenue</th>
+                            <th className="p-3 text-left">Date</th>
+                            <th className="p-3 text-left">Medicine</th>
+                            <th className="p-3 text-left">Quantity Sold</th>
+                            <th className="p-3 text-left">Revenue</th>
 
                         </tr>
 
@@ -371,9 +313,12 @@ const filteredSales = sales.filter(
                         {
                             filteredSales.map((sale) => (
 
-                                <tr key={sale.id}>
+                                <tr key={sale.id}
+                                    className="bg-gray-100 hover:bg-gray-200"
 
-                                    <td className="border p-3">
+                                >
+
+                                    <td className=" p-3">
 
                                         {
                                             new Date(
@@ -383,15 +328,15 @@ const filteredSales = sales.filter(
 
                                     </td>
 
-                                    <td className="border p-3">
+                                    <td className=" p-3">
                                         {sale.medicineName}
                                     </td>
 
-                                    <td className="border p-3">
+                                    <td className=" p-3">
                                         {sale.quantitySold}
                                     </td>
 
-                                    <td className="border p-3">
+                                    <td className=" p-3">
                                         ₹ {sale.totalPrice}
                                     </td>
 
@@ -401,37 +346,6 @@ const filteredSales = sales.filter(
                         }
 
                     </tbody>
-                    {/* <tbody>
-
-                        {
-                            Object.entries(groupedRevenue)
-                                .map(([date, revenue, medicineName, quantity]) => (
-
-                                    <tr key={date}>
-
-                                        <td className="border p-3">
-                                            {date}
-                                        </td>
-
-                                        <td className="border p-3">
-                                            {medicineName}
-                                        </td>
-                                        <td className="border p-3">
-                                            {quantity}
-                                        </td>
-
-                                        <td className="border p-3">
-                                            ₹ {revenue}
-                                        </td>
-
-                                    </tr>
-
-                                    
-
-                                ))
-                        }
-
-                    </tbody> */}
 
                 </table>
 

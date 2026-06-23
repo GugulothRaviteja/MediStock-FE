@@ -110,7 +110,7 @@ function SalesReport() {
 
         <MainLayout>
 
-            <div className="p-6">
+                <div className="bg-gradient-to-r from-gray-300 to-gray-100 p-6 rounded-3xl shadow-sm overflow-x-auto">
 
                 <h1 className="text-3xl font-bold mb-6">
                     Sales Report
@@ -120,7 +120,7 @@ function SalesReport() {
 
                     <button
                         onClick={() => setFilter("daily")}
-                        className="bg-blue-600 text-white px-4 py-2 rounded"
+                        className="bg-blue-500 text-white px-4 py-2 rounded"
                     >
                         Daily
                     </button>
@@ -141,21 +141,21 @@ function SalesReport() {
 
                 </div>
 
-                <table className="w-full bg-white">
+                    <table className="w-full border-collapse">
 
                     <thead>
 
-                        <tr>
+                            <tr className="bg-gray-200 text-gray-700">
 
-                            <th className="p-3 border">
+                            <th className="p-3 text-left">
                                 Date
                             </th>
 
-                            <th className="p-3 border">
+                            <th className="p-3 text-left">
                                 Total Medicines Sold
                             </th>
 
-                            <th className="p-3 border">
+                            <th className="p-3 text-left">
                                 Medicines Name
                             </th>
 
@@ -168,17 +168,18 @@ function SalesReport() {
                             Object.entries(groupedSales)
                                 .map(([date, data]) => (
 
-                                    <tr key={date}>
+                                    <tr key={date}                                         className="bg-gray-100 hover:bg-gray-200"
+>
 
-                                        <td className="border p-3">
+                                        <td className="p-3">
                                             {date}
                                         </td>
 
-                                        <td className="border p-3">
+                                        <td className=" p-3">
                                             {data.totalQty}
                                         </td>
 
-                                        <td className="border p-3">
+                                        <td className=" p-3">
                                             {data.medicines.join(", ")}
                                         </td>
 
@@ -188,33 +189,6 @@ function SalesReport() {
                         }
 
                     </tbody>
-
-                    {/* <tbody>
-
-                        {
-                            Object.entries(groupedSales)
-                                .map(([period, qty, madicineName]) => (
-
-                                    <tr key={period}>
-
-                                        <td className="border p-3">
-                                            {period}
-                                        </td>
-
-                                        <td className="border p-3">
-                                            {qty}
-                                        </td>
-
-                                        <td className="border p-3">
-                                            {madicineName}
-                                        </td>
-
-                                    </tr>
-
-                                ))
-                        }
-
-                    </tbody> */}
 
                 </table>
 

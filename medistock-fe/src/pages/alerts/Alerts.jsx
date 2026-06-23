@@ -58,10 +58,10 @@ function Alerts() {
 
     return (
 
-        <MainLayout>
+        <MainLayout >
             <div className="min-h-screen bg-gray-100 p-6">
 
-                <h1 className="text-4xl font-bold text-blue-600 mb-8">
+                <h1 className="text-4xl font-bold text-gray-600 mb-8">
                     Alerts Dashboard
                 </h1>
 
@@ -82,7 +82,7 @@ function Alerts() {
 
                                         <div
                                             key={alert.medicineId}
-                                            className="bg-white p-6 rounded-xl shadow border-l-4 border-red-500"
+                                            className="bg-white rounded-3xl p-6 shadow-sm border border-l-4 border-gray-500 border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50"
                                         >
 
                                             <h3 className="text-xl font-bold mb-2">
@@ -96,7 +96,7 @@ function Alerts() {
                                                 </span>
                                             </p>
 
-                                            <p className="mt-3 text-red-500 font-medium">
+                                            <p className="mt-3 text-red-800 font-medium">
                                                 {alert.alertMessage}
                                             </p>
 
@@ -131,28 +131,28 @@ function Alerts() {
 
                                         <div
                                             key={alert.medicineId}
-                                            className="bg-white p-6 rounded-xl shadow border-l-4 border-yellow-500"
+                                            className="bg-white rounded-3xl p-6 shadow-sm border border-l-4 border-gray-500 border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50"
                                         >
 
                                             <h3 className="text-xl font-bold mb-2">
                                                 {alert.medicineName}
                                             </h3>
 
-                                            <p className="text-gray-700">
+                                            <p className="text-gray-800">
                                                 Expiry Date:
-                                                <span className="font-bold ml-2">
+                                                <span className="font-bold ml-2 text-red-500">
                                                     {alert.expiryDate}
                                                 </span>
                                             </p>
 
                                             <p className="text-gray-700 mt-2">
                                                 Days Left:
-                                                <span className="font-bold text-yellow-500 ml-2">
+                                                <span className="font-bold text-yellow-600 ml-2">
                                                     {alert.daysLeft}
                                                 </span>
                                             </p>
 
-                                            <p className="mt-3 text-yellow-600 font-medium">
+                                            <p className="mt-3 text-yellow-800 font-medium">
                                                 {alert.alertMessage}
                                             </p>
 
@@ -170,7 +170,7 @@ function Alerts() {
 
                 </div>
 
-                 <div className="flex justify-lest mt-6">
+                <div className="flex justify-lest mt-6">
 
                     <button
                         onClick={() => navigate(-1)}

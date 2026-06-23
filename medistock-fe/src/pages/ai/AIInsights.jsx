@@ -1,152 +1,3 @@
-// import { useEffect, useState } from "react";
-// import API from "../../api/axios";
-// import MainLayout from "../../layouts/MainLayout";
-// import { useNavigate } from "react-router-dom";
-
-// function AIInsights() {
-
-//     const navigate = useNavigate();
-
-//     const [insights, setInsights] = useState([]);
-
-//     const fetchAIInsights = async () => {
-
-//         try {
-
-//             const response = await API.get(
-//                 "/ai/insights"
-//             );
-
-//             setInsights(response.data);
-
-//         } catch (error) {
-
-//             console.log(error);
-//         }
-//     };
-
-//     useEffect(() => {
-
-//         fetchAIInsights();
-
-//     }, []);
-
-//     return (
-
-//         <MainLayout>
-//             <div className="min-h-screen bg-gray-100 p-6">
-
-//                 <h1 className="text-4xl font-bold text-blue-600 mb-8">
-//                     AI Inventory Insights
-//                 </h1>
-
-//                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-//                     {
-//                         insights.length > 0
-//                             ? (
-//                                 insights.map((item, index) => (
-
-//                                     <div
-//                                         key={index}
-//                                         className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-purple-600"
-//                                     >
-
-//                                         <h2 className="text-2xl font-bold text-purple-600 mb-4">
-//                                             {item.medicineName}
-//                                         </h2>
-
-//                                         {/* CURRENT STOCK */}
-
-//                                         <div className="mb-3">
-
-//                                             <p className="text-gray-600">
-//                                                 Current Stock
-//                                             </p>
-
-//                                             <p className="text-xl font-semibold">
-//                                                 {item.currentStock}
-//                                             </p>
-
-//                                         </div>
-
-//                                         {/* MONTHLY SALES */}
-
-//                                         <div className="mb-3">
-
-//                                             <p className="text-gray-600">
-//                                                 Estimated Monthly Sales
-//                                             </p>
-
-//                                             <p className="text-xl font-semibold">
-//                                                 {item.estimatedMonthlySales}
-//                                             </p>
-
-//                                         </div>
-
-//                                         {/* RUNOUT DAYS */}
-
-//                                         <div className="mb-3">
-
-//                                             <p className="text-gray-600">
-//                                                 Estimated Runout Days
-//                                             </p>
-
-//                                             <p className="text-xl font-semibold text-red-500">
-//                                                 {item.estimatedRunOutDays} Days
-//                                             </p>
-
-//                                         </div>
-
-//                                         {/* RECOMMENDATION */}
-
-//                                         <div className="mt-5 bg-purple-100 p-4 rounded-lg">
-
-//                                             <p className="font-medium text-purple-700">
-//                                                 {item.recommendation}
-//                                             </p>
-
-//                                         </div>
-
-//                                     </div>
-//                                 ))
-//                             )
-//                             : (
-//                                 <p className="text-gray-500">
-//                                     No AI insights available
-//                                 </p>
-//                             )
-//                     }
-
-//                 </div>
-
-//                  <div className="flex justify-lest mt-6">
-
-//                     <button
-//                         onClick={() => navigate(-1)}
-//                         className="
-//         bg-gray-600
-//         hover:bg-gray-700
-//         text-white
-//         px-6
-//         py-3
-//         rounded-xl
-//         transition
-//         "
-//                     >
-//                         ← Back
-//                     </button>
-
-//                 </div>
-
-//             </div>
-//         </MainLayout>
-//     );
-// }
-
-// export default AIInsights;
-
-
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import MainLayout from "../../layouts/MainLayout";
@@ -207,7 +58,7 @@ function AIInsights() {
 
                 {/* LOW STOCK */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-red-600 mb-4">
                         1. Low Stock Alerts
@@ -227,7 +78,7 @@ function AIInsights() {
 
                 {/* TOP SELLING */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-green-600 mb-4">
                         2. Top Selling Medicines
@@ -247,7 +98,7 @@ function AIInsights() {
 
                 {/* SLOW MOVING */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-orange-600 mb-4">
                         3. Slow Moving Medicines
@@ -267,7 +118,7 @@ function AIInsights() {
 
                 {/* INVENTORY HEALTH */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-blue-600 mb-4">
                         4. Inventory Health Summary
@@ -287,7 +138,7 @@ function AIInsights() {
 
                 {/* RESTOCK */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-purple-600 mb-4">
                         5. Restocking Recommendations
@@ -307,7 +158,7 @@ function AIInsights() {
 
                 {/* BUSINESS RECOMMENDATIONS */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-indigo-600 mb-4">
                         6. Business Recommendations
@@ -341,7 +192,7 @@ function AIInsights() {
 
                 {/* MONSOON PREDICTIONS */}
 
-                <div className="bg-white p-6 rounded-xl shadow mb-6">
+                <div className="bg-white rounded-3xl p-6 mb-6 shadow-sm border border-gray-200 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-400 hover:shadow-xl hover:shadow-gray-200/50">
 
                     <h2 className="text-2xl font-bold text-cyan-600 mb-4">
                         7. Seasonal & Disease Predictions

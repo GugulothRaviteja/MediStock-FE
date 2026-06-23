@@ -258,14 +258,14 @@ function Sales() {
                 <h2 className="text-2xl font-semibold mb-4">
                     Sales History
                 </h2>
-                <div className="bg-white p-6 rounded-xl shadow overflow-auto border">
+                <div className="bg-gradient-to-r from-gray-300 to-gray-100 rounded-xl shadow overflow-auto ">
 
 
                     <table className=" w-full border-collapse">
 
                         <thead>
 
-                            <tr className="bg-green-600 text-white">
+                            <tr className="bg-gray-600 text-white">
 
                                 <th className="p-3 text-left">
                                     ID
@@ -298,7 +298,7 @@ function Sales() {
 
                                     <tr
                                         key={sale.transactionId}
-                                        className="border-b"
+                                        className="bg-gray-100 hover:bg-gray-200"
                                     >
 
                                         <td className="p-3">
@@ -386,74 +386,7 @@ function Sales() {
 
                 </div>
 
-                {/* WEEKLY SALES REPORT */}
-
-                {/* <div className="bg-white p-6 rounded-xl shadow">
-
-                    <h2 className="text-2xl font-semibold mb-4">
-                        Weekly High Sales Report
-                    </h2>
-
-                    <table className="w-full border-collapse">
-
-                        <thead>
-
-                            <tr className="bg-purple-600 text-white">
-
-                                <th className="p-3 text-left">
-                                    Medicine
-                                </th>
-
-                                <th className="p-3 text-left">
-                                    Quantity Sold
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {
-                                weeklyReport.length > 0
-                                    ? (
-                                        weeklyReport.map((report, index) => (
-
-                                            <tr
-                                                key={index}
-                                                className="border-b"
-                                            >
-
-                                                <td className="p-3">
-                                                    {report.medicineName}
-                                                </td>
-
-                                                <td className="p-3">
-                                                    {report.totalQuantitySold}
-                                                </td>
-
-                                            </tr>
-                                        ))
-                                    )
-                                    : (
-                                        <tr>
-
-                                            <td
-                                                colSpan="2"
-                                                className="p-3 text-center text-gray-500"
-                                            >
-                                                No sales data available
-                                            </td>
-
-                                        </tr>
-                                    )
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div> */}
+                {/* SALES REPORT */}
 
                 <div className="flex justify-left mt-6">
 

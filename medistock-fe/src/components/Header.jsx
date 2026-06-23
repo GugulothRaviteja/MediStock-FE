@@ -67,7 +67,6 @@ function Header({
   console.log("low stock :", lowStockCount);
   console.log("low exp :", expiryAlertCount);
 
-
   return (
 
     <header
@@ -110,32 +109,32 @@ function Header({
         {/* NOTIFICATION */}
 
         <div
-    className="relative"
-    ref={notificationRef}
->
+          className="relative"
+          ref={notificationRef}
+        >
 
-    <button
-        onClick={() =>
-            setShowNotifications(
+          <button
+            onClick={() =>
+              setShowNotifications(
                 !showNotifications
-            )
-        }
-        className="
+              )
+            }
+            className="
         relative
         text-2xl
         text-white
         hover:text-yellow-400
         transition
         "
-    >
+          >
 
-        <FaBell />
+            <FaBell />
 
-        {
-            notifications.length > 0 && (
+            {
+              notifications.length > 0 && (
 
                 <span
-                    className="
+                  className="
                     absolute
                     -top-2
                     -right-2
@@ -150,140 +149,7 @@ function Header({
                     justify-center
                     "
                 >
-                    {notifications.length}
-                </span>
-
-            )
-        }
-
-    </button>
-
-    {
-        showNotifications && (
-
-            <div
-                className="
-                absolute
-                right-0
-                top-12
-                w-80
-                bg-white
-                rounded-2xl
-                shadow-xl
-                border
-                z-50
-                overflow-hidden
-                "
-            >
-
-                <div
-                    className="
-                    px-4
-                    py-3
-                    border-b
-                    font-semibold
-                    "
-                >
-                    Notifications
-                </div>
-
-                {
-                    notifications.length === 0 ? (
-
-                        <div
-                            className="
-                            p-4
-                            text-center
-                            text-gray-500
-                            "
-                        >
-                            No notifications
-                        </div>
-
-                    ) : (
-
-                        notifications.map(
-                            (item, index) => (
-
-                                <div
-                                    key={index}
-                                    className="
-                                    px-4
-                                    py-3
-                                    border-b
-                                    hover:bg-gray-50
-                                    "
-                                >
-
-                                    <p
-                                        className={
-                                            item.type === "low"
-                                                ? "text-red-500 font-medium"
-                                                : "text-yellow-500 font-medium"
-                                        }
-                                    >
-                                        {
-                                            item.type === "low"
-                                                ? "Low Stock Alert"
-                                                : "Expiry Alert"
-                                        }
-                                    </p>
-
-                                    <p className="text-sm text-gray-600">
-                                        {item.message}
-                                    </p>
-
-                                </div>
-
-                            )
-                        )
-
-                    )
-                }
-
-            </div>
-
-        )
-    }
-
-</div>
-
-        {/* <div className="relative flex items-center">
-
-          <button
-            onClick={() =>
-              setShowNotifications(!showNotifications)
-            }
-            className="
-            relative
-            text-2xl
-            text-blue-600
-            "
-          >
-            <FaBell />
-
-            {
-              (lowStockCount + expiryAlertCount > 0) && (
-
-                <span
-                  className="
-                  absolute
-                  -top-2
-                  -right-2
-                  bg-red-500
-                  text-white
-                  text-xs
-                  rounded-full
-                  w-5
-                  h-5
-                  flex
-                  items-center
-                  justify-center
-                  "
-                >
-                  {
-                    lowStockCount + expiryAlertCount
-                  }
+                  {notifications.length}
                 </span>
 
               )
@@ -304,44 +170,82 @@ function Header({
                 rounded-2xl
                 shadow-xl
                 border
-                p-4
+                z-50
+                overflow-hidden
                 "
               >
 
-                <h3 className="font-bold mb-3">
+                <div
+                  className="
+                    px-4
+                    py-3
+                    border-b
+                    font-semibold
+                    "
+                >
                   Notifications
-                </h3>
-
-                <div className="mb-4">
-
-                  <p className="font-semibold text-red-500">
-                    Low Stock Alerts
-                  </p>
-
-                  <p>
-                    {lowStockCount} Medicines
-                  </p>
-
                 </div>
 
-                <div>
+                {
+                  notifications.length === 0 ? (
 
-                  <p className="font-semibold text-yellow-500">
-                    Expiry Alerts
-                  </p>
+                    <div
+                      className="
+                            p-4
+                            text-center
+                            text-gray-500
+                            "
+                    >
+                      No notifications
+                    </div>
 
-                  <p>
-                    {expiryAlertCount} Medicines
-                  </p>
+                  ) : (
 
-                </div>
+                    notifications.map(
+                      (item, index) => (
+
+                        <div
+                          key={index}
+                          className="
+                                    px-4
+                                    py-3
+                                    border-b
+                                    hover:bg-gray-50
+                                    "
+                        >
+
+                          <p
+                            className={
+                              item.type === "low"
+                                ? "text-red-500 font-medium"
+                                : "text-yellow-500 font-medium"
+                            }
+                          >
+                            {
+                              item.type === "low"
+                                ? "Low Stock Alert"
+                                : "Expiry Alert"
+                            }
+                          </p>
+
+                          <p className="text-sm text-gray-600">
+                            {item.message}
+                          </p>
+
+                        </div>
+
+                      )
+                    )
+
+                  )
+                }
 
               </div>
 
             )
           }
 
-        </div> */}
+        </div>
 
         {/* PROFILE */}
 
@@ -356,20 +260,20 @@ function Header({
           rounded-full
           "
         >
-{
-                                    role === "ADMIN" && (
-          <img
-            src="../src/assets/tej pic.jpg"
-            alt="Admin"
-            className="
+          {
+            role === "ADMIN" && (
+              <img
+                src="../src/assets/tej pic.jpg"
+                alt="Admin"
+                className="
             w-12
             h-12
             p-0
             rounded-full
             "
-          />
-          )
-}
+              />
+            )
+          }
 
           <div>
 

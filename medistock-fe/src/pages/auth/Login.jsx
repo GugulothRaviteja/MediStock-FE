@@ -16,8 +16,24 @@ function Login() {
     });
 
     const [error, setError] = useState("");
+    const [touched, setTouched] = useState({});
 
     const [errors, setErrors] = useState({});
+
+    // const handleChange = (e) => {
+
+    //     const { name, value } = e.target;
+
+    //     setFormData({
+    //         ...formData,
+    //         [name]: value,
+    //     });
+
+    //     setErrors({
+    //         ...errors,
+    //         [name]: "",
+    //     });
+    // };
 
     const handleChange = (e) => {
 
@@ -28,12 +44,78 @@ function Login() {
             [name]: value,
         });
 
-        setErrors({
-            ...errors,
-            [name]: "",
-        });
+        let newErrors = { ...errors };
+
+        if (name === "email") {
+
+            if (!value.trim()) {
+
+                newErrors.email =
+                    "Email is required";
+
+            }
+            else if (
+                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+            ) {
+
+                newErrors.email =
+                    "Please enter a valid email address";
+
+            }
+            else {
+
+                delete newErrors.email;
+            }
+        }
+
+        if (name === "password") {
+
+            if (!value.trim()) {
+
+                newErrors.password =
+                    "Password is required";
+
+            }
+            else if (value.length < 6) {
+
+                newErrors.password =
+                    "Password must be at least 6 characters";
+
+            }
+            else {
+
+                delete newErrors.password;
+            }
+        }
+
+        setErrors(newErrors);
     };
 
+    const handleBlur = (e) => {
+
+        const { name, value } = e.target;
+
+        setTouched(prev => ({
+            ...prev,
+            [name]: true,
+        }));
+
+        let newErrors = { ...errors };
+
+        if (name === "email" && !value.trim()) {
+
+            newErrors.email =
+                "Email is required";
+        }
+
+        if (name === "password" && !value.trim()) {
+
+            newErrors.password =
+                "Password is required";
+        }
+
+        setErrors(newErrors);
+    };
 
     const validateLoginForm = () => {
 
@@ -96,7 +178,7 @@ function Login() {
             );
 
 
-            if (response.data.role==="STAFF"){
+            if (response.data.role === "STAFF") {
                 localStorage.setItem(
                     "welcomeMessage",
                     "true"
@@ -113,9 +195,17 @@ function Login() {
         }
     };
 
+    const isLoginFormValid =
+
+    formData.email &&
+    formData.password &&
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email) &&
+    formData.password.length >= 6 &&
+    Object.keys(errors).length === 0;
+
     return (
 
-        <div className="min-h-screen bg-[#F3F4F6] flex items-center justify-center p-6">
+        <div className="min-h-screen bg-gradient-to-r from-blue-100 to-blue-200 flex items-center justify-center p-6">
 
             <div className="w-4xl max-w-4xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
@@ -206,6 +296,7 @@ function Login() {
                                     placeholder="Enter your email"
                                     value={formData.email}
                                     onChange={handleChange}
+                                    onBlur={handleBlur}
                                     className={`
             w-full
             mt-2
@@ -215,7 +306,7 @@ function Login() {
             py-3
             outline-none
             focus:ring-2
-            ${errors.email
+            ${touched.email && errors.email
                                             ? "border-red-500"
                                             : "border-gray-300"
                                         }
@@ -223,7 +314,7 @@ function Login() {
                                 />
 
                                 {
-                                    errors.email && (
+                                    touched.email && errors.email && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.email}
                                         </p>
@@ -231,34 +322,6 @@ function Login() {
                                 }
 
                             </div>
-                            {/* <div>
-
-                                <label className="text-sm font-semibold text-gray-800">
-
-                                    Email
-
-                                </label>
-
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="Enter your email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    className="
-                                    w-full
-                                    mt-2
-                                    border
-                                    rounded-full
-                                    px-5
-                                    py-3
-                                    outline-none
-                                    focus:ring-2
-                                    focus:ring-blue-400
-                                    "
-                                />
-
-                            </div> */}
 
                             {/* PASSWORD */}
 
@@ -281,6 +344,7 @@ function Login() {
                                         placeholder="Enter your password"
                                         value={formData.password}
                                         onChange={handleChange}
+                                        onBlur={handleBlur}
                                         className={`
                 w-full
                 border
@@ -290,12 +354,19 @@ function Login() {
                 pr-12
                 outline-none
                 focus:ring-2
-                ${errors.password
+                ${touched.password && errors.password
                                                 ? "border-red-500"
                                                 : "border-gray-300"
                                             }
             `}
                                     />
+                                    {
+                                    touched.password && errors.password && (
+                                        <p className="text-red-500 text-sm mt-1">
+                                            {errors.password}
+                                        </p>
+                                    )
+                                }
 
                                     <button
                                         type="button"
@@ -319,73 +390,15 @@ function Login() {
 
                                 </div>
 
-                                {
+                                {/* {
                                     errors.password && (
                                         <p className="text-red-500 text-sm mt-1">
                                             {errors.password}
                                         </p>
                                     )
-                                }
+                                } */}
 
                             </div>
-                            {/* <div>
-
-                                <label className="text-sm font-semibold text-gray-800">
-
-                                    Password
-
-                                </label>
-
-                                <div className="relative mt-2">
-
-                                    <input
-                                        type={
-                                            showPassword
-                                                ? "text"
-                                                : "password"
-                                        }
-                                        name="password"
-                                        placeholder="Enter your password"
-                                        value={formData.password}
-                                        onChange={handleChange}
-                                        className="
-                                        w-full
-                                        border
-                                        rounded-full
-                                        px-5
-                                        py-3
-                                        pr-12
-                                        outline-none
-                                        focus:ring-2
-                                        focus:ring-blue-400
-                                        "
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() =>
-                                            setShowPassword(!showPassword)
-                                        }
-                                        className="
-                                        absolute
-                                        right-4
-                                        top-1/2
-                                        -translate-y-1/2
-                                        text-gray-400
-                                        "
-                                    >
-
-                                        {
-                                            showPassword
-                                                ? <FaEyeSlash />
-                                                : <FaEye />
-                                        }
-
-                                    </button>
-
-                                </div>
-
-                            </div> */}
 
                             {/* ERROR */}
 
@@ -420,6 +433,7 @@ function Login() {
 
                             <button
                                 type="submit"
+                                disabled={!isLoginFormValid}
                                 className="
                                 w-full
                                 bg-[#4582AC]
@@ -429,6 +443,8 @@ function Login() {
                                 rounded-full
                                 font-semibold
                                 transition
+                                disabled:bg-gray-400
+                                disabled:cursor-not-allowed
                                 "
                             >
                                 Log In
